@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module LearnOpen
   class Logger
     attr_reader :log_path
@@ -12,8 +14,6 @@ module LearnOpen
     end
 
     private
-
-    attr_reader :log_path
 
     def setup
       FileUtils.touch(log_path)

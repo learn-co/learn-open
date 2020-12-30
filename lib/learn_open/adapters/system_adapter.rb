@@ -1,9 +1,11 @@
+# frozen_string_literal: true
+
 require 'open3'
 
 module LearnOpen
   module Adapters
     class SystemAdapter
-      def self.open_editor(editor, path:)
+      def self.open_editor(editor)
         system("#{editor} .")
       end
 
@@ -12,7 +14,7 @@ module LearnOpen
       end
 
       def self.spawn(command, block: false)
-        pid = Process.spawn(command, [:out, :err] => File::NULL)
+        pid = Process.spawn(command, %i[out err] => File::NULL)
         Process.waitpid(pid) if block
       end
 
@@ -27,8 +29,6 @@ module LearnOpen
       def self.change_context_directory(dir)
         Dir.chdir(dir)
       end
-
-      private
 
       def self.excluded_dirs
         "(node_modules/|\.git/|\.swp?x?$|~$|4913$)"

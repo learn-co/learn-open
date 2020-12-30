@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'optparse'
 
 module LearnOpen
@@ -11,25 +13,19 @@ module LearnOpen
     def parse
       options = {}
       rest = OptionParser.new do |opts|
-        opts.on("--next", "open next lab") do |n|
+        opts.on('--next', 'open next lab') do |n|
           options[:next] = n
         end
-        opts.on("--editor=EDITOR", "specify editor") do |e|
+        opts.on('--editor=EDITOR', 'specify editor') do |e|
           options[:editor] = e
         end
 
-        opts.on("--clone-only", "only download files. No shell") do |co|
+        opts.on('--clone-only', 'only download files. No shell') do |co|
           options[:clone_only] = co
         end
       end.parse(args)
       options[:lesson_name] = rest.first
       options
-    end
-
-    def learn_config_editor
-      config_path = File.expand_path('~/.learn-config')
-      editor = YAML.load(File.read(config_path))[:editor]
-      editor.split.first
     end
 
     def execute
@@ -44,6 +40,16 @@ module LearnOpen
         cli_args[:next],
         cli_args[:clone_only]
       ]
+    end
+
+    private
+
+    def learn_config_editor
+      config_path = File.expand_path('~/.learn-config')
+      YAML.safe_load(
+        File.read(config_path),
+        [Symbol]
+      )[:editor].split.first
     end
   end
 end

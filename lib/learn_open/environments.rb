@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module LearnOpen
   module Environments
     def self.classify(options)
@@ -17,11 +19,11 @@ module LearnOpen
     end
 
     def self.jupyter_container?(environment_vars)
-      environment_vars['JUPYTER_CONTAINER'] == "true"
+      environment_vars['JUPYTER_CONTAINER'] == 'true'
     end
 
     def self.ide_environment?(environment_vars)
-      environment_vars['IDE_CONTAINER'] == "true"
+      environment_vars['IDE_CONTAINER'] == 'true'
     end
 
     def self.on_mac?(platform)
